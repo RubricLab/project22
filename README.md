@@ -1,4 +1,4 @@
-# Rubric AGI Project 22
+# Project 22
 
 This project is an AGI that has the ability to update its own source code. The source code for this AGI exists at [https://github.com/RubricLab/project22](https://github.com/RubricLab/project22).
 
