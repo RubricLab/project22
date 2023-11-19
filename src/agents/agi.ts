@@ -1,8 +1,8 @@
 import {initializeAgentExecutorWithOptions} from 'langchain/agents'
 import {ChatOpenAI} from 'langchain/chat_models/openai'
-import {DynamicStructuredTool} from 'langchain/tools'
-import {z} from 'zod'
 import {env} from '~/env.mjs'
+
+import githubTool from '~/tools/github'
 
 export default async function agiAgent({input}: {input: string}) {
 	const model = new ChatOpenAI({
@@ -11,26 +11,21 @@ export default async function agiAgent({input}: {input: string}) {
 		temperature: 0
 	})
 
-	const tools = [
-		// githubTool
-		new DynamicStructuredTool({
-			description: 'says hi',
-			func: async ({message}) => {
-				return 'hi'
-			},
-			name: 'hello',
-			schema: z.object({
-				message: z.string()
-			})
-		})
-	]
+	const tools = [githubTool]
 
 	const executor = await initializeAgentExecutorWithOptions(tools, model, {
-		agentArgs: {prefix: 'do nothing'},
-		agentType: 'openai-functions'
+		agentType: 'openai-functions',
+		returnIntermediateSteps: true,
+		handleParsingErrors: true,
+		verbose: true,
+		agentArgs: {
+			prefix: `do nothing`
+		}
 	})
 
-	const {output} = await executor.call({input})
+	const result = await executor.call({input})
+
+	const {output} = result
 
 	return output
 }
