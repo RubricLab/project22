@@ -1,7 +1,7 @@
 import {DynamicStructuredTool} from 'langchain/tools'
 import {Octokit} from 'octokit'
 import {z} from 'zod'
-import {env} from '~/env.mjs'
+import env from '~/env.mjs'
 
 const octokit = new Octokit({auth: env.GITHUB_PAT})
 
