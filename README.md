@@ -3,6 +3,7 @@
 This project is bootstrapped with [`create-rubric-app`](https://github.com/RubricLab/create-rubric-app).
 
 ## Getting Started
+
 ```sh
 bun i
 bun dev
