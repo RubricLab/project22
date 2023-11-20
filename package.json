@@ -1,8 +1,10 @@
 {
 	"dependencies": {
 		"@t3-oss/env-nextjs": "^0.7.1",
-		"langchain": "^0.0.192",
-		"next": "^14.0.3"
+		"langchain": "^0.0.194",
+		"next": "^14.0.3",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	},
 	"description": "This project was bootstrapped with create-rubric-app",
 	"devDependencies": {
@@ -10,15 +12,12 @@
 		"@rubriclab/prettier-config": "latest",
 		"@rubriclab/typescript-config": "latest",
 		"eslint": "^8.54.0",
-		"npm-check-updates": "^16.14.6",
+		"npm-check-updates": "^16.14.11",
 		"prettier": "^3.1.0",
 		"typescript": "^5.2.2"
 	},
 	"name": "project-22",
 	"private": true,
-	"resolutions": {
-		"zod-to-json-schema": "3.20.3"
-	},
 	"scripts": {
 		"bleed": "ncu -u && bun i",
 		"build": "next build",
