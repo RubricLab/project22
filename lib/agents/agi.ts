@@ -45,9 +45,7 @@ class FeedbackLoop {
 		if (evaluation.relevance > 0.5 && evaluation.coherence > 0.5)
 			model.temperature = Math.max(0.1, model.temperature - 0.1)
 		// Increase precision
-		else model.temperature = Math.min(1.0,
-model.temperature + 0.1)//
-Increase creativity
+		else model.temperature = Math.min(1.0, model.temperature + 0.1) //Increase creativity
 	}
 
 	extractKeywords(text) {
