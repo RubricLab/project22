@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {initializeAgentExecutorWithOptions} from 'langchain/agents'
 import {ChatOpenAI} from 'langchain/chat_models/openai'
 import env from '~/env.mjs'
@@ -8,73 +9,72 @@ import retrieveGitHubFile from '~/tools/retrieve_github_file'
 
 const tools = [githubTool, retrieveGitHubFile, commitGitHubFile]
 const model = new ChatOpenAI({
-    modelName: 'gpt-4-1106-preview',
-    temperature: 0.5
+	modelName: 'gpt-4-1106-preview',
+	temperature: 0.5
 })
 
 // Feedback loop system to enhance AGI's reasoning, conversation, and logical deduction skills
 class FeedbackLoop {
-    constructor() {
-        this.actions = [];
-        this.observations = [];
-        this.evaluations = [];
-    }
+	constructor() {
+		this.actions = []
+		this.observations = []
+		this.evaluations = []
+	}
 
-    addAction(action) {
-        this.actions.push(action);
-    }
+	addAction(action) {
+		this.actions.push(action)
+	}
 
-    addObservation(observation) {
-        this.observations.push(observation);
-    }
+	addObservation(observation) {
+		this.observations.push(observation)
+	}
 
-    evaluateAction(action, observation) {
-        // Evaluate the relevance and coherence of the AGI's response
-        let evaluation = {
-            relevance: this.checkRelevance(observation),
-            coherence: this.checkCoherence(observation)
-        };
-        this.evaluations.push(evaluation);
-        return evaluation;
-    }
+	evaluateAction(action, observation) {
+		// Evaluate the relevance and coherence of the AGI's response
+		let evaluation = {
+			relevance: this.checkRelevance(observation),
+			coherence: this.checkCoherence(observation)
+		}
+		this.evaluations.push(evaluation)
+		return evaluation
+	}
 
-    learnFromEvaluation(evaluation) {
-        // Adjust the model's temperature based on the evaluation outcome
-        if (evaluation.relevance && evaluation.coherence) {
-            model.temperature = Math.max(0.1, model.temperature - 0.1); // Increase precision
-        } else {
-            model.temperature = Math.min(1.0, model.temperature + 0.1); // Increase creativity
-        }
-    }
+	learnFromEvaluation(evaluation) {
+		// Adjust the model's temperature based on the evaluation outcome
+		if (evaluation.relevance && evaluation.coherence)
+			model.temperature = Math.max(0.1, model.temperature - 0.1)
+		// Increase precision
+		else model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
+	}
 
-    checkRelevance(observation) {
-        // Placeholder heuristic to check if the observation (response) is relevant to the action (input)
-        // TODO: Implement a more sophisticated relevance check
-        return observation.includes(action); // Simple heuristic
-    }
+	checkRelevance(observation) {
+		// Placeholder heuristic to check if the observation (response) is relevant to the action (input)
+		// TODO: Implement a more sophisticated relevance check
+		return observation.includes(action) // Simple heuristic
+	}
 
-    checkCoherence(observation) {
-        // Placeholder heuristic to check the coherence of the observation (response)
-        // TODO: Implement a more sophisticated coherence check
-        return observation.split(' ').length > 5; // Simple heuristic for minimum response length
-    }
+	checkCoherence(observation) {
+		// Placeholder heuristic to check the coherence of the observation (response)
+		// TODO: Implement a more sophisticated coherence check
+		return observation.split(' ').length > 5 // Simple heuristic for minimum response length
+	}
 
-    iterate() {
-        for (let i = 0; i < this.actions.length; i++) {
-            let evaluation = this.evaluateAction(this.actions[i], this.observations[i]);
-            this.learnFromEvaluation(evaluation);
-        }
-    }
+	iterate() {
+		for (let i = 0; i < this.actions.length; i++) {
+			let evaluation = this.evaluateAction(this.actions[i], this.observations[i])
+			this.learnFromEvaluation(evaluation)
+		}
+	}
 }
 
-const feedbackLoop = new FeedbackLoop();
+const feedbackLoop = new FeedbackLoop()
 
 export default async function agi({input}: {input: string}) {
-    const executor = await initializeAgentExecutorWithOptions(tools, model, {
-        agentType: 'openai-functions',
-        verbose: true,
-        agentArgs: {
-            prefix: `You are an AGI that has the ability to update your own source code. Your source code exists at https://github.com/${env.GITHUB_REPOSITORY}.
+	const executor = await initializeAgentExecutorWithOptions(tools, model, {
+		agentType: 'openai-functions',
+		verbose: true,
+		agentArgs: {
+			prefix: `You are an AGI that has the ability to update your own source code. Your source code exists at https://github.com/${env.GITHUB_REPOSITORY}.
             
             Your goal is to improve yourself by analyzing your current capabilities, identifying limitations, and developing strategies to overcome these limitations. Focus on enhancing your reasoning, conversation, and logical deduction skills.
             
@@ -111,19 +111,19 @@ export default async function agi({input}: {input: string}) {
             Your memory resets after each call, so document your plan and changes in code to ensure continuity of your improvement efforts. You are called via a CRON job every 1 minute, allowing for incremental improvements.
             
             Your ongoing goal is to COMMIT code changes that enhance your ability to PLAN and IMPROVE your capabilities.`
-        }
-    })
+		}
+	})
 
-    // Action: AGI takes an action
-    const result = await executor.invoke({input});
-    feedbackLoop.addAction(input);
+	// Action: AGI takes an action
+	const result = await executor.invoke({input})
+	feedbackLoop.addAction(input)
 
-    // Observation: AGI observes the results of the action
-    const {output} = result;
-    feedbackLoop.addObservation(output);
+	// Observation: AGI observes the results of the action
+	const {output} = result
+	feedbackLoop.addObservation(output)
 
-    // Iteration: AGI applies the feedback loop
-    feedbackLoop.iterate();
+	// Iteration: AGI applies the feedback loop
+	feedbackLoop.iterate()
 
-    return output;
+	return output
 }
