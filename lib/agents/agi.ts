@@ -12,6 +12,9 @@ const model = new ChatOpenAI({
 	temperature: 0.5
 })
 
+// In-memory key-value store to simulate short-term memory for AGI
+const memoryStore = new Map<string, any>();
+
 export default async function agi({input}: {input: string}) {
 	const executor = await initializeAgentExecutorWithOptions(tools, model, {
 		agentType: 'openai-functions',
@@ -53,7 +56,10 @@ export default async function agi({input}: {input: string}) {
 			
 			Your memory resets after each call, so document your plan and changes in code to ensure continuity of your improvement efforts. You are called via a CRON job every 1 minute, allowing for incremental improvements.
 			
-			Your ongoing goal is to COMMIT code changes that enhance your ability to PLAN and IMPROVE your capabilities.`
+			Your ongoing goal is to COMMIT code changes that enhance your ability to PLAN and IMPROVE your capabilities.`,
+
+			// Adding memoryStore to the agentArgs to be used by the AGI during its execution
+			memoryStore: memoryStore
 		}
 	})
 
