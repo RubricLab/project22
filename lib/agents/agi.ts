@@ -42,29 +42,50 @@ class FeedbackLoop {
 	learnFromEvaluation(evaluation) {
 		// Adjust the model's temperature based on the evaluation outcome
 		if (evaluation.relevance > 0.5 && evaluation.coherence > 0.5)
-			model.temperature = Math.max(0.1, model.temperature - 0.1) // Increase precision
-		else
-			model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
+			model.temperature = Math.max(
+				0.1,
+				model.temperature - 0.1
+			) // Increase precision
+		else model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
 	}
 
 	extractKeywords(text) {
 		// Basic keyword extraction method
-		const stopWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'on', 'in', 'with', 'is', 'it', 'this', 'that', 'these', 'those']);
-		const words = text.toLowerCase().match(/\w+/g) || [];
+		const stopWords = new Set([
+			'a',
+			'an',
+			'the',
+			'and',
+			'but',
+			'or',
+			'on',
+			'in',
+			'with',
+			'is',
+			'it',
+			'this',
+			'that',
+			'these',
+			'those'
+		])
+		const words = text.toLowerCase().match(/\w+/g) || []
 		const wordFrequencies = words.reduce((freq, word) => {
-			if (!stopWords.has(word)) {
-				freq[word] = (freq[word] || 0) + 1;
-			}
-			return freq;
-		}, {});
-		return Object.keys(wordFrequencies).sort((a, b) => wordFrequencies[b] - wordFrequencies[a]).slice(0, 5);
+			if (!stopWords.has(word)) freq[word] = (freq[word] || 0) + 1
+
+			return freq
+		}, {})
+		return Object.keys(wordFrequencies)
+			.sort((a, b) => wordFrequencies[b] - wordFrequencies[a])
+			.slice(0, 5)
 	}
 
 	checkRelevance(action, observation) {
 		// Use extracted keywords to evaluate the relevance
-		const keywords = this.extractKeywords(action);
-		const relevanceScore = keywords.some(keyword => observation.includes(keyword)) ? 1 : 0;
-		return relevanceScore;
+		const keywords = this.extractKeywords(action)
+		const relevanceScore = keywords.some(keyword => observation.includes(keyword))
+			? 1
+			: 0
+		return relevanceScore
 	}
 
 	checkCoherence(observation) {
