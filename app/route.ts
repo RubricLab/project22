@@ -4,6 +4,6 @@ export const dynamic = 'force-dynamic'
 
 export async function GET() {
 	return new Response(await agi({
-		input: 'begin self improvement' // CHANGE THIS
+		input: 'analyze and improve reasoning and deduction capabilities' // UPDATED INPUT FOR SELF-IMPROVEMENT TASK
 	}))
 }
