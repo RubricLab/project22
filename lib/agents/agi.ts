@@ -2,10 +2,11 @@ import {initializeAgentExecutorWithOptions} from 'langchain/agents'
 import {ChatOpenAI} from 'langchain/chat_models/openai'
 import env from '~/env.mjs'
 
+import commitGitHubFile from '~/tools/commit_github_file'
 import githubTool from '~/tools/github'
 import retrieveGitHubFile from '~/tools/retrieve_github_file'
 
-const tools = [githubTool, retrieveGitHubFile]
+const tools = [githubTool, retrieveGitHubFile, commitGitHubFile]
 const model = new ChatOpenAI({
 	modelName: 'gpt-4-1106-preview',
 	temperature: 0.5
