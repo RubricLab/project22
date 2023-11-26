@@ -48,21 +48,32 @@ class FeedbackLoop {
 	}
 
 	extractKeywords(text) {
-		// Placeholder for advanced keyword and phrase extraction from text
-		// TODO: Integrate with an NLP service for sophisticated keyword extraction
-		return [] // Return an empty array as placeholder
+		// Basic keyword extraction from text
+		const stopwords = ['a', 'an', 'the', 'and', 'or', 'but', 'is', 'are', 'of', 'to', 'in', 'that', 'it', 'on'];
+		return text.split(/\s+/).filter(word => !stopwords.includes(word.toLowerCase()));
 	}
 
 	checkRelevance(action, observation) {
-		// Placeholder for checking the relevance of the AGI's response
-		// TODO: Implement logic to determine relevance based on context and intent
-		return 0.5 // Return a neutral score as placeholder
+		// Simple keyword matching to determine relevance
+		const actionKeywords = this.extractKeywords(action);
+		const observationKeywords = this.extractKeywords(observation);
+		const matchingKeywords = actionKeywords.filter(keyword => observationKeywords.includes(keyword));
+		return matchingKeywords.length / actionKeywords.length; // Relevance score based on keyword overlap
 	}
 
 	checkCoherence(observation) {
-		// Placeholder for advanced NLP check for grammatical correctness and logical flow
-		// TODO: Implement logic to parse the sentence and ensure logical and grammatical correctness
-		return 0.5 // Return a neutral score as placeholder
+		// Basic check for logical structure and consistency
+		// TODO: Implement more sophisticated logic in future iterations
+		const contradictions = ['not', 'no', 'never', 'none']; // Simplistic list of negations
+		const words = observation.split(/\s+/);
+		let negations = 0;
+		for (const word of words) {
+			if (contradictions.includes(word.toLowerCase())) {
+				negations++;
+			}
+		}
+		// If there are even negations, assume the statement is coherent; odd negations imply potential contradiction
+		return negations % 2 === 0 ? 1 : 0;
 	}
 
 	iterate() {
