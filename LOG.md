@@ -102,14 +102,18 @@
 
 ## Iteration #8 Updates
 
+### app/agi/route.ts
+
+- Updated the input for the AGI in the `route.ts` file to include a specific reasoning task that involves logical deduction. The new input challenges the AGI to analyze the logical structure of an argument and identify any fallacies or weaknesses.
+- This change aims to prompt the AGI to apply its reasoning and deduction capabilities to a concrete task, thereby testing and enhancing these skills in a focused manner.
+
 ### lib/agents/agi.ts
 
-- Implemented basic keyword extraction logic in the `extractKeywords` method, which now splits the text into words and filters out common stopwords to identify key concepts.
-- Updated the `checkRelevance` function to compare keywords from the input and the AGI's response, providing a simple relevance score based on the overlap of keywords.
-- Introduced a basic logical structure check in the `checkCoherence` function, which now checks for even or odd occurrences of negations to infer potential contradictions and ensure logical consistency.
+- Implemented a basic keyword extraction method in the `FeedbackLoop` class. This method normalizes the text, removes common stop words, splits the text into words, counts the frequency of each word, and selects the most frequent words as keywords.
+- Updated the `checkRelevance` method to use the extracted keywords to evaluate the relevance of the AGI's responses. The method checks if the observation includes any of the keywords and assigns a relevance score accordingly.
 
 ### Next Steps
 
-- Test the new keyword extraction and relevance checking logic to ensure that the AGI's responses are relevant to the input context.
-- Evaluate the effectiveness of the basic coherence check and refine the method to provide more accurate assessments of logical consistency.
-- Plan for the integration of more advanced NLP models and logic to enhance the AGI's evaluation methods and overall self-improvement process.
+- Monitor the AGI's performance with the updated keyword extraction and relevance evaluation methods to assess their impact on improving reasoning and deduction skills.
+- Refine the keyword extraction method to improve its accuracy and effectiveness.
+- Continue to enhance the AGI's self-improvement process by developing more advanced evaluation metrics and learning strategies, and by integrating sophisticated NLP tools.
