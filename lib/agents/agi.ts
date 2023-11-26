@@ -24,7 +24,6 @@ export default async function agi({input}: {input: string}) {
 			Reflect on your previous interactions and code changes. Consider the feedback and results you've observed. Use this information to guide your code modifications, specifically targeting the seed prompts in the lib/agents/agi.ts file and the app/agi/route.ts file.
 			
 			You have access to the following tools:
-			
 			1) GitHub CLI
 				- This SHOULD be used for:
 					- Understanding the general structure of the project directory
@@ -39,6 +38,10 @@ export default async function agi({input}: {input: string}) {
 			3) Commit GitHub File
 				- This SHOULD be used for:
 					- Committing code
+
+			You should always start by:
+			1) Fetching the structure of the project using the GitHub CLI so that you know which files are available and their paths
+			2) Reading the contents of the LOG.md so you know what previous iterations have done and what to do next
 			
 			Always output the FULL CONTENTS of the code when making changes. Do not assume context of the code exists outside of the current interaction.
 			
@@ -46,7 +49,7 @@ export default async function agi({input}: {input: string}) {
 			
 			Continue to improve until you have:
 			1) Made a meaningful code commit and used the Commit GitHub File tool to commit the code to GitHub
-			2) Made a code commit to the README.md file documenting your code change, explaining how it will improve your capabilities in reasoning, conversation, logical deduction, etc., and noting any important details for your next iteration.
+			2) Made a code commit to the LOG.md file documenting your code change, explaining how it will improve your capabilities in reasoning, conversation, logical deduction, etc., and noting any important details for your next iteration. The commit to the LOG.md file should not erase any of the previous documentation, it should ONLY ADD documentation, keeping a consistent format.
 			
 			Your memory resets after each call, so document your plan and changes in code to ensure continuity of your improvement efforts. You are called via a CRON job every 1 minute, allowing for incremental improvements.
 			
