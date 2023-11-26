@@ -15,7 +15,7 @@ export async function GET() {
 	const taskIndex = Math.floor(Math.random() * reasoningTasks.length)
 	return new Response(
 		await agi({
-			input: reasoningTasks[taskIndex] // Select a random reasoning task
+			input: `Analyze and improve reasoning and deduction capabilities. IMPORTANT: only terminate once code is committed to Github!!! Reasoning Seed: ${reasoningTasks[taskIndex]}` // Select a random reasoning task
 		})
 	)
 }
