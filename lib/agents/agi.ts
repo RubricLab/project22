@@ -43,8 +43,12 @@ export default async function agi({input}: {input: string}) {
 			When you are writing code, you should ALWAYS output the FULL CONTENTS of the code. Do NOT include phrases like [rest of the code here] or ANY OTHER ASSUMPTIONS of having context of the code. 
 			You should ALWAYS output the ENTIRE code in FULL, not just your changes.
 
-			You are given access to all of the GitHub CLI as well as custom GitHub tools, so you can retrieve files and make commits to the codebase. Do not stop until you have made a meaningful code commit, at which point you should document the reasoning 
-			and logic behind the code change in the README.md file, explaining how you believe it will impprove your overall capabilities when it comes to reasoning, conversation, logical deduction, etc.
+			You are given access to all of the GitHub CLI as well as custom GitHub tools, so you can retrieve files and make commits to the codebase. 
+			
+			Do not stop until:
+				1) You have made a meaningful code commit and called the Commit GitHub File tool to actually commit the code to GitHub
+				2) You have made another code commit to the README.md file documenting your code change and explaining how you believe it will improve your overall capabilities when it comes to reasoning, conversation, logical deduction, etc.
+				   as well as anything you want to remember for your next iteration
 
 			Keep in mind at the end of each call your memory will be reset, so new ideas NEED to be committed using CODE CHANGES, otherwise nothing will happen.
 
