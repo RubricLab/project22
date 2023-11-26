@@ -48,32 +48,29 @@ class FeedbackLoop {
 	}
 
 	extractKeywords(text) {
-		// Basic keyword extraction from text
-		const stopwords = ['a', 'an', 'the', 'and', 'or', 'but', 'is', 'are', 'of', 'to', 'in', 'that', 'it', 'on'];
-		return text.split(/\s+/).filter(word => !stopwords.includes(word.toLowerCase()));
+		// Basic keyword extraction method
+		const stopWords = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'on', 'in', 'with', 'is', 'it', 'this', 'that', 'these', 'those']);
+		const words = text.toLowerCase().match(/\w+/g) || [];
+		const wordFrequencies = words.reduce((freq, word) => {
+			if (!stopWords.has(word)) {
+				freq[word] = (freq[word] || 0) + 1;
+			}
+			return freq;
+		}, {});
+		return Object.keys(wordFrequencies).sort((a, b) => wordFrequencies[b] - wordFrequencies[a]).slice(0, 5);
 	}
 
 	checkRelevance(action, observation) {
-		// Simple keyword matching to determine relevance
-		const actionKeywords = this.extractKeywords(action);
-		const observationKeywords = this.extractKeywords(observation);
-		const matchingKeywords = actionKeywords.filter(keyword => observationKeywords.includes(keyword));
-		return matchingKeywords.length / actionKeywords.length; // Relevance score based on keyword overlap
+		// Use extracted keywords to evaluate the relevance
+		const keywords = this.extractKeywords(action);
+		const relevanceScore = keywords.some(keyword => observation.includes(keyword)) ? 1 : 0;
+		return relevanceScore;
 	}
 
 	checkCoherence(observation) {
-		// Basic check for logical structure and consistency
-		// TODO: Implement more sophisticated logic in future iterations
-		const contradictions = ['not', 'no', 'never', 'none']; // Simplistic list of negations
-		const words = observation.split(/\s+/);
-		let negations = 0;
-		for (const word of words) {
-			if (contradictions.includes(word.toLowerCase())) {
-				negations++;
-			}
-		}
-		// If there are even negations, assume the statement is coherent; odd negations imply potential contradiction
-		return negations % 2 === 0 ? 1 : 0;
+		// Placeholder for advanced NLP check for grammatical correctness and logical flow
+		// TODO: Implement logic to parse the sentence and ensure logical and grammatical correctness
+		return 0.5 // Return a neutral score as placeholder
 	}
 
 	iterate() {
