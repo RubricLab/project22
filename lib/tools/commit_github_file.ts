@@ -56,7 +56,7 @@ const commitGitHubFile = new DynamicStructuredTool({
 	schema: z.object({
 		path: z
 			.string()
-			.describe('Path to the file in the GitHub repository eg. /src/index.js'),
+			.describe('Path to the file in the GitHub repository eg. src/index.js'),
 		content: z.string().describe('Content to be committed to the file'),
 		message: z.string().describe('Commit message')
 	})
