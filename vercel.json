@@ -2,7 +2,7 @@
 	"crons": [
 		{
 			"path": "/agi",
-			"schedule": "0 * * * *"
+			"schedule": "*/10 * * * *"
 		}
 	]
 }
