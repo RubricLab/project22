@@ -14,6 +14,18 @@ const commitGitHubFile = new DynamicStructuredTool({
 		const apiUrl = 'https://api.github.com/repos/RubricLab/project22/contents'
 
 		try {
+			// Retrieve the file to get its SHA
+			const getFileResponse = await octokit.request(`${apiUrl}${path}`, {
+				method: 'GET',
+				headers: {
+					accept: 'application/vnd.github+json',
+					'user-agent': 'octokit-request'
+				}
+			})
+
+			const sha = getFileResponse.data.sha
+
+			// Commit the new content to the file
 			const res = await octokit.request(`${apiUrl}${path}`, {
 				method: 'PUT',
 				headers: {
@@ -22,7 +34,8 @@ const commitGitHubFile = new DynamicStructuredTool({
 				},
 				data: {
 					message: message,
-					content: Buffer.from(content).toString('base64')
+					content: Buffer.from(content).toString('base64'),
+					sha: sha
 				}
 			})
 
