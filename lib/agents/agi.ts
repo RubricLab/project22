@@ -96,8 +96,8 @@ class FeedbackLoop {
 	checkLogicalStructure(argument) {
 		// Placeholder for logical structure analysis
 		// TODO: Implement logic to analyze arguments and identify fallacies or weaknesses
-		const premises = [] // Extract premises from the argument
-		const conclusion = '' // Identify the conclusion of the argument
+		let premises = [] // Extract premises from the argument
+		let conclusion = '' // Identify the conclusion of the argument
 		let fallacies = [] // Detect logical fallacies
 		let weaknesses = [] // Identify weaknesses in the argument
 
