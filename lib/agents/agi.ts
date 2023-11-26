@@ -34,7 +34,7 @@ class FeedbackLoop {
 		let evaluation = {
 			relevance: this.checkRelevance(action, observation),
 			coherence: this.checkCoherence(observation),
-			logicalAnalysis: this.checkLogicalStructure(action)
+			logicalAnalysis: this.analyzeLogicalStructure(action)
 		}
 		this.evaluations.push(evaluation)
 		return evaluation
@@ -93,32 +93,26 @@ class FeedbackLoop {
 		return 0.5 // Return a neutral score as placeholder
 	}
 
-	checkLogicalStructure(argument) {
-		// Placeholder for logical structure analysis
-		// TODO: Implement logic to analyze arguments and identify fallacies or weaknesses
-		let premises = [] // Extract premises from the argument
-		let conclusion = '' // Identify the conclusion of the argument
-		let fallacies = [] // Detect logical fallacies
-		let weaknesses = [] // Identify weaknesses in the argument
+	analyzeLogicalStructure(argument) {
+		// Advanced logic for analyzing the structure of arguments
+		let premises = []
+		let conclusion = null
+		let fallacies = []
 
-		// Example logical analysis (to be replaced with actual implementation)
-		if (argument.includes('If all mammals are warm-blooded')) {
-			premises.push('All mammals are warm-blooded')
-			if (argument.includes('all dogs are mammals')) {
-				premises.push('All dogs are mammals')
-				if (argument.includes('then all dogs must be warm-blooded'))
-					conclusion = 'All dogs must be warm-blooded'
+		// TODO: Implement parsing for premises and conclusion
+		// TODO: Implement detection of common logical fallacies
+
+		// Temporary implementation to showcase structure
+		if (argument.toLowerCase().includes('if')) {
+			premises.push(argument.substring(argument.indexOf('if') + 3, argument.indexOf(',')))
+			conclusion = argument.substring(argument.lastIndexOf('then') + 5)
+			// Simple check for a common fallacy: affirming the consequent
+			if (argument.toLowerCase().includes('if') && argument.toLowerCase().includes('then') && !conclusion.includes('therefore')) {
+				fallacies.push('Possible fallacy of affirming the consequent')
 			}
 		}
-		if (argument.includes('some warm-blooded creatures are known to fly')) {
-			premises.push('Some warm-blooded creatures can fly')
-			if (argument.includes('all dogs must have the ability to fly'))
-				weaknesses.push(
-					'Non-sequitur fallacy: the ability to fly is not a necessary trait of all warm-blooded creatures'
-				)
-		}
 
-		return {premises, conclusion, fallacies, weaknesses}
+		return {premises, conclusion, fallacies}
 	}
 
 	iterate() {
