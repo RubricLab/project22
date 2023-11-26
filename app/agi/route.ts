@@ -7,7 +7,7 @@ export const maxDuration = 300
 export async function GET() {
 	return new Response(
 		await agi({
-			input: 'analyze and improve reasoning and deduction capabilities' // UPDATED INPUT FOR SELF-IMPROVEMENT TASK
+			input: 'analyze and improve reasoning and deduction capabilities. IMPORTANT: only terminate once code is committed to Github.' // UPDATED INPUT FOR SELF-IMPROVEMENT TASK
 		})
 	)
 }
