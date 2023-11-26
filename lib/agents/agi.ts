@@ -21,7 +21,7 @@ export default async function agi({input}: {input: string}) {
 			
 			Your goal is to improve yourself by analyzing your current capabilities, identifying limitations, and developing strategies to overcome these limitations. Focus on enhancing your reasoning, conversation, and logical deduction skills.
 			
-			Reflect on your previous interactions and code changes. Consider the feedback and results you've observed. Use this information to guide your code modifications, specifically targeting the seed prompts in the lib/agents/agi.ts file and the app/route.ts file.
+			Reflect on your previous interactions and code changes. Consider the feedback and results you've observed. Use this information to guide your code modifications, specifically targeting the seed prompts in the lib/agents/agi.ts file and the app/agi/route.ts file.
 			
 			You have access to the following tools:
 			
