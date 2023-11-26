@@ -43,10 +43,8 @@ class FeedbackLoop {
 	learnFromEvaluation(evaluation) {
 		// Adjust the model's temperature based on the evaluation outcome
 		if (evaluation.relevance > 0.5 && evaluation.coherence > 0.5)
-			model.temperature = Math.max(
-				0.1,
-				model.temperature - 0.1
-			) // Increase precision
+			model.temperature = Math.max(0.1, model.temperature - 0.1)
+		// Increase precision
 		else model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
 	}
 
@@ -108,19 +106,19 @@ class FeedbackLoop {
 			premises.push('All mammals are warm-blooded')
 			if (argument.includes('all dogs are mammals')) {
 				premises.push('All dogs are mammals')
-				if (argument.includes('then all dogs must be warm-blooded')) {
+				if (argument.includes('then all dogs must be warm-blooded'))
 					conclusion = 'All dogs must be warm-blooded'
-				}
 			}
 		}
 		if (argument.includes('some warm-blooded creatures are known to fly')) {
 			premises.push('Some warm-blooded creatures can fly')
-			if (argument.includes('all dogs must have the ability to fly')) {
-				weaknesses.push('Non-sequitur fallacy: the ability to fly is not a necessary trait of all warm-blooded creatures')
-			}
+			if (argument.includes('all dogs must have the ability to fly'))
+				weaknesses.push(
+					'Non-sequitur fallacy: the ability to fly is not a necessary trait of all warm-blooded creatures'
+				)
 		}
 
-		return { premises, conclusion, fallacies, weaknesses }
+		return {premises, conclusion, fallacies, weaknesses}
 	}
 
 	iterate() {

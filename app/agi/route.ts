@@ -6,7 +6,7 @@ export const maxDuration = 300
 
 const reasoningTasks = [
 	'Analyze and improve reasoning and deduction capabilities. IMPORTANT: only terminate once code is committed to Github!', // Original task
-	'Analyze the logical structure of an argument provided in the input, identify any fallacies, and assess the argument's validity.' // New task
+	"Analyze the logical structure of an argument provided in the input, identify any fallacies, and assess the argument's validity." // New task
 ]
 
 export async function GET() {
