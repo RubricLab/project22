@@ -32,7 +32,7 @@ class FeedbackLoop {
 	evaluateAction(action, observation) {
 		// Evaluate the relevance and coherence of the AGI's response
 		let evaluation = {
-			relevance: this.checkRelevance(observation),
+			relevance: this.checkRelevance(action, observation),
 			coherence: this.checkCoherence(observation)
 		}
 		this.evaluations.push(evaluation)
@@ -47,16 +47,23 @@ class FeedbackLoop {
 		else model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
 	}
 
-	checkRelevance(observation) {
-		// Placeholder heuristic to check if the observation (response) is relevant to the action (input)
-		// TODO: Implement a more sophisticated relevance check
-		return observation.includes(action) // Simple heuristic
+	extractKeywords(text) {
+		// Basic keyword extraction from text
+		// TODO: Implement a more sophisticated keyword extraction method
+		return text.match(/\b(\w+)\b/g).filter((word, index, self) => self.indexOf(word) === index)
+	}
+
+	checkRelevance(action, observation) {
+		// Basic keyword matching to check if the observation (response) is relevant to the action (input)
+		const actionKeywords = this.extractKeywords(action)
+		const observationKeywords = this.extractKeywords(observation)
+		return actionKeywords.some(keyword => observationKeywords.includes(keyword))
 	}
 
 	checkCoherence(observation) {
-		// Placeholder heuristic to check the coherence of the observation (response)
-		// TODO: Implement a more sophisticated coherence check
-		return observation.split(' ').length > 5 // Simple heuristic for minimum response length
+		// Basic NLP check for grammatical correctness and logical flow
+		// TODO: Implement a more sophisticated NLP coherence check
+		return observation.split('. ').filter(sentence => sentence.split(' ').length > 3).length > 0 // Simple heuristic for sentence structure
 	}
 
 	iterate() {
