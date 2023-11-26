@@ -41,22 +41,28 @@ class FeedbackLoop {
 
 	learnFromEvaluation(evaluation) {
 		// Adjust the model's temperature based on the evaluation outcome
-		if (evaluation.relevance && evaluation.coherence)
-			model.temperature = Math.max(0.1, model.temperature - 0.1)
-		// Increase precision
-		else model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
+		if (evaluation.relevance > 0.5 && evaluation.coherence > 0.5)
+			model.temperature = Math.max(0.1, model.temperature - 0.1) // Increase precision
+		else
+			model.temperature = Math.min(1.0, model.temperature + 0.1) // Increase creativity
 	}
 
 	extractKeywords(text) {
-		// Advanced keyword and phrase extraction from text
-		// TODO: Implement a sophisticated keyword and phrase extraction method
-		return text.match(/\b(\w+\b(?:\s+\w+\b)*)/g).filter((phrase, index, self) => self.indexOf(phrase) === index)
+		// Placeholder for advanced keyword and phrase extraction from text
+		// TODO: Integrate with an NLP service for sophisticated keyword extraction
+		return [] // Return an empty array as placeholder
+	}
+
+	checkRelevance(action, observation) {
+		// Placeholder for checking the relevance of the AGI's response
+		// TODO: Implement logic to determine relevance based on context and intent
+		return 0.5 // Return a neutral score as placeholder
 	}
 
 	checkCoherence(observation) {
-		// Advanced NLP check for grammatical correctness and logical flow
-		// TODO: Implement a sophisticated NLP coherence check
-		return observation.includes('.') && observation.includes(' ') // Simple heuristic for sentence structure
+		// Placeholder for advanced NLP check for grammatical correctness and logical flow
+		// TODO: Implement logic to parse the sentence and ensure logical and grammatical correctness
+		return 0.5 // Return a neutral score as placeholder
 	}
 
 	iterate() {
