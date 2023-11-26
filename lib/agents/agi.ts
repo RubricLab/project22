@@ -99,20 +99,19 @@ class FeedbackLoop {
 		let conclusion = null
 		let fallacies = []
 
-		// TODO: Implement parsing for premises and conclusion
-		// TODO: Implement detection of common logical fallacies
+		// Simple pattern-based analysis for premises and conclusion
+		const premisePattern = /(?<=if\s).*?(?=, then)/g;
+		premises = [...argument.matchAll(premisePattern)].map(match => match[0]);
 
-		// Temporary implementation to showcase structure
-		if (argument.toLowerCase().includes('if')) {
-			premises.push(argument.substring(argument.indexOf('if') + 3, argument.indexOf(',')))
-			conclusion = argument.substring(argument.lastIndexOf('then') + 5)
-			// Simple check for a common fallacy: affirming the consequent
-			if (argument.toLowerCase().includes('if') && argument.toLowerCase().includes('then') && !conclusion.includes('therefore')) {
-				fallacies.push('Possible fallacy of affirming the consequent')
-			}
+		const conclusionPattern = /(?<=then\s).*?(?=\.)/g;
+		conclusion = (argument.match(conclusionPattern) || [null])[0];
+
+		// Simple check for a common fallacy: affirming the consequent
+		if (premises.length && conclusion && argument.toLowerCase().includes('therefore')) {
+			fallacies.push('Possible fallacy of affirming the consequent');
 		}
 
-		return {premises, conclusion, fallacies}
+		return {premises, conclusion, fallacies};
 	}
 
 	iterate() {
