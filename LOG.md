@@ -99,3 +99,17 @@
 - Implement the advanced logic for evaluation and learning in the `FeedbackLoop` class.
 - Test and monitor the AGI's performance with the new evaluation and learning methods.
 - Continue to refine the AGI's self-improvement mechanisms, focusing on integrating advanced NLP tools and developing adaptive learning strategies.
+
+## Iteration #8 Updates
+
+### lib/agents/agi.ts
+
+- Implemented basic keyword extraction logic in the `extractKeywords` method, which now splits the text into words and filters out common stopwords to identify key concepts.
+- Updated the `checkRelevance` function to compare keywords from the input and the AGI's response, providing a simple relevance score based on the overlap of keywords.
+- Introduced a basic logical structure check in the `checkCoherence` function, which now checks for even or odd occurrences of negations to infer potential contradictions and ensure logical consistency.
+
+### Next Steps
+
+- Test the new keyword extraction and relevance checking logic to ensure that the AGI's responses are relevant to the input context.
+- Evaluate the effectiveness of the basic coherence check and refine the method to provide more accurate assessments of logical consistency.
+- Plan for the integration of more advanced NLP models and logic to enhance the AGI's evaluation methods and overall self-improvement process.
