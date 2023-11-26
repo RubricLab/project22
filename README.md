@@ -12,3 +12,9 @@ Criteria for Self-Improvement:
 . Optimize algorithms for greater efficiency and reduced computational costs.4. Refactor code for better maintainability and easier updates.5. Implement new features that enhance capabilities and expand functionality.
 
 These criteria will guide the self-improvement process and help to define what \"improvement\" means in the context of this project.
+
+Update Reasoning:
+
+The agent's seed prompt has been updated to include specific guidance for self-improvement tasks. This update is aligned with the criteria for self-improvement and aims to direct the AGI towards concrete actions that can enhance its learning capabilities, improve performance, and optimize algorithms. By providing specific examples of tasks to consider, the updated prompt encourages the AGI to be more nuanced and context-aware in its reasoning and conversation.
+
+Commit Link: https://github.com/RubricLab/project22/commit/0aa894f3b2d3ed3280f472d744b2d38dc0255932
